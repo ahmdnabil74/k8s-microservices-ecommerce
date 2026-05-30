@@ -5,13 +5,14 @@
 variable "aws_region" {
   description = "AWS region where resources will be created"
   type        = string
-  default     = "us-west-2"
+  default     = "eu-central-1"
 }
+
 
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = "retail-store"
+  default     = "retail-store-eks-cluster"
 }
 
 variable "environment" {
@@ -50,11 +51,13 @@ variable "enable_single_nat_gateway" {
   default     = true
 }
 
+#prometheus and grafana variables
 variable "enable_monitoring" {
   description = "Enable monitoring stack (Prometheus, Grafana) with LoadBalancer access"
   type        = bool
-  default     = true
-}
+  default     = false
+  #default     = true # to save money
+} 
 
 variable "enable_aws_lb_controller" {
   description = "Enable AWS Load Balancer Controller"

@@ -3,6 +3,7 @@
 # =============================================================================
 
 # Data sources
+# give us the list of available AZs in the region, and current caller identity for tagging
 data "aws_availability_zones" "available" {
   state = "available"
 }
@@ -10,6 +11,7 @@ data "aws_availability_zones" "available" {
 data "aws_caller_identity" "current" {}
 
 # Random suffix for unique resource names
+# cluster unique name to avoid conflicts when running multiple times
 resource "random_string" "suffix" {
   length  = 4
   special = false

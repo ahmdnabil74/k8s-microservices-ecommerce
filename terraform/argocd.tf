@@ -3,14 +3,14 @@
 # =============================================================================
 
 # Wait for the cluster and add-ons to be ready
-resource "time_sleep" "wait_for_cluster" {
-  create_duration = "30s"
-  depends_on = [
-    module.retail_app_eks,
-    helm_release.cert_manager,
-    helm_release.ingress_nginx
-  ]
-}
+# resource "time_sleep" "wait_for_cluster" {
+#   create_duration = "30s"
+#   depends_on = [
+#     module.retail_app_eks,
+#     helm_release.cert_manager,
+#     helm_release.ingress_nginx
+#   ]
+# }
 
 # =============================================================================
 # CLEANUP RESOURCES ON DESTROY
@@ -54,7 +54,7 @@ resource "null_resource" "cleanup_k8s_resources" {
 # =============================================================================
 # ARGOCD HELM INSTALLATION
 # =============================================================================
-
+# download argocd on the cluster, and create argocd namespace
 resource "helm_release" "argocd" {
   name             = "argocd"
   namespace        = var.argocd_namespace
@@ -137,7 +137,7 @@ resource "helm_release" "argocd" {
     })
   ]
 
-  depends_on = [time_sleep.wait_for_cluster]
+  #depends_on = [time_sleep.wait_for_cluster]
 }
 
 # =============================================================================

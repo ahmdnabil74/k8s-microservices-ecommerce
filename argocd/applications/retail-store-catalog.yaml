@@ -1,25 +1,27 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: Application  # type of resource is app and is related to argocd not k8s 
 metadata:
-  name: retail-store-catalog
-  namespace: argocd
+  name: retail-store-catalog #name of app in argocd 
+  namespace: argocd #app resource is created in argocd namespace
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "1" # ensures this app is synced before any other apps with higher sync-wave values
 spec:
   project: retail-store
   source:
     repoURL: https://github.com/arumullayaswanth/k8s-microservices-ecommerce-app
-    targetRevision: main
-    path: src/catalog/chart
+    targetRevision: main # branch to deploy from
+    path: src/catalog/chart # path to helm chart in the repo
     helm:
       valueFiles:
-        - values.yaml
+        - values.yaml #helm installed by values.yaml file in the chart directory
+  
   destination:
-    server: https://kubernetes.default.svc
+    server: https://kubernetes.default.svc # deploy to the cluster where argocd is running
     namespace: retail-store
   syncPolicy:
     automated:
-      prune: true
-      selfHeal: true
+      prune: true #if resources are removed from the helm chart, they will be deleted from the cluster during sync
+      selfHeal: true # if resources are modified in the cluster, they will be reverted to match the helm chart during sync
     syncOptions:
       - CreateNamespace=true 
+

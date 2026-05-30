@@ -32,11 +32,6 @@ The Retail Store Sample App demonstrates a modern microservices architecture dep
 
 ![Application Architecture Diagram](./docs/images/application-architecture.png)
 
-- **UI Service**: Java-based frontend
-- **Catalog Service**: Go-based product catalog API
-- **Cart Service**: Java-based shopping cart API
-- **Orders Service**: Java-based order management API
-- **Checkout Service**: Node.js-based checkout orchestration API
 
 ## Infrastructure Architecture
 

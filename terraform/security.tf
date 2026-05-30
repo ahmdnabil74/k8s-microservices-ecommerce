@@ -13,17 +13,18 @@ resource "aws_security_group_rule" "internet_to_lb_http" {
   security_group_id = module.retail_app_eks.cluster_security_group_id
 }
 
-resource "aws_security_group_rule" "internet_to_lb_https" {
-  description       = "Allow HTTPS traffic from internet to LoadBalancer"
-  type              = "ingress"
-  from_port         = 443
-  to_port           = 443
-  protocol          = "tcp"
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = module.retail_app_eks.cluster_security_group_id
-}
+# resource "aws_security_group_rule" "internet_to_lb_https" {
+#   description       = "Allow HTTPS traffic from internet to LoadBalancer"
+#   type              = "ingress"
+#   from_port         = 443
+#   to_port           = 443
+#   protocol          = "tcp"
+#   cidr_blocks       = ["0.0.0.0/0"]
+#   security_group_id = module.retail_app_eks.cluster_security_group_id
+# }
 
 # Allow LoadBalancer health checks from AWS
+# NGINX Ingress Controller uses port 10254 for health checks
 resource "aws_security_group_rule" "health_checks_to_lb" {
   description       = "Allow AWS health checks to LoadBalancer"
   type              = "ingress"
@@ -35,6 +36,7 @@ resource "aws_security_group_rule" "health_checks_to_lb" {
 }
 
 # Allow NodePort range for services (if needed)
+# allow k8s sevices to connect each other intenrally
 resource "aws_security_group_rule" "nodeport_access" {
   description       = "Allow NodePort access within VPC"
   type              = "ingress"
